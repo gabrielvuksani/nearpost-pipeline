@@ -393,6 +393,8 @@ if grep -q "REPLACE_WITH_KV_NAMESPACE_ID" worker/wrangler.toml; then
   fi
 fi
 if confirm "Deploy the nearpost-scheduler Worker now? Its crons start immediately."; then
+  # record.yml ships disabled so its backup schedule doesn't fail daily before secrets exist.
+  gh workflow enable record.yml
   wrangler deploy
   printf '%s' "$WORKER_GITHUB_TOKEN" | wrangler secret put GITHUB_TOKEN
   printf '%s' "$HEALTHCHECKS_PING_KEY" | wrangler secret put HC_PING_KEY
@@ -405,6 +407,7 @@ fi
 stage "First run"
 say "One manual daily run proves every secret and source end to end."
 if confirm "Start the record workflow with mode=daily now?"; then
+  gh workflow enable record.yml
   gh workflow run record.yml -f mode=daily
   sleep 8
   run_id=$(gh run list --workflow record.yml --event workflow_dispatch --limit 1 --json databaseId --jq '.[0].databaseId')

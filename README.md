@@ -98,7 +98,9 @@ uv run nearpost verify            # verify the whole chain
 
 Nothing here has been done yet. Every step needs your accounts or approval.
 
-1. **Push this repository to GitHub.** The workflows must be on `main`.
+1. **Push this repository to GitHub.** The workflows must be on `main`. `record.yml`
+   starts disabled, so its backup schedule can't fail before secrets exist. The wizard
+   enables it.
 2. **Fill in credentials:**
    ```sh
    cp .env.example .env && chmod 600 .env
