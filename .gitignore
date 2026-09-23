@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.nearpost-data/
+.env
+.env.*
+worker/node_modules/
+worker/.wrangler/
+.DS_Store
+.dev.vars*
+!.env.example

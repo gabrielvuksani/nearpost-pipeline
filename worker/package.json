@@ -1,0 +1,13 @@
+{
+  "name": "nearpost-scheduler",
+  "private": true,
+  "type": "module",
+  "description": "Cloudflare Worker that dispatches Nearpost pipeline runs and watches their health.",
+  "scripts": {
+    "test": "node --test",
+    "dry-run": "wrangler deploy --dry-run --outdir dist"
+  },
+  "devDependencies": {
+    "wrangler": "^4.136.3"
+  }
+}

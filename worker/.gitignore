@@ -1,0 +1,5 @@
+node_modules/
+.wrangler/
+dist/
+# Wrangler reads local secrets from these files.
+.dev.vars*

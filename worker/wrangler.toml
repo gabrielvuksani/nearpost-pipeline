@@ -1,0 +1,31 @@
+# Nearpost scheduler: dispatches the recording workflow and watches its health.
+# See README.md for setup. Nothing here is secret.
+
+name = "nearpost-scheduler"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+# No public surface: the Worker has no fetch handler and no workers.dev URL.
+# Monitoring is the nearpost-watchdog healthchecks.io ping.
+workers_dev = false
+
+[triggers]
+# Tick every 5 minutes; daily run at 06:00 UTC. Keep in sync with src/index.js.
+crons = ["*/5 * * * *", "0 6 * * *"]
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "nearpost-recorder"
+
+[[kv_namespaces]]
+binding = "STATE"
+# Gabriel fills this in with the id printed by `wrangler kv namespace create STATE`.
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+[vars]
+GITHUB_REPO = "gabrielvuksani/nearpost-pipeline"
+WORKFLOW_FILE = "record.yml"
+
+# Secrets: set with `wrangler secret put <NAME>`, never written in this file.
+#   GITHUB_TOKEN  fine-grained PAT, this repo only, "Actions: read and write"
+#   HC_PING_KEY   healthchecks.io project ping key
